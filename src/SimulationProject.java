@@ -52,22 +52,22 @@ public class SimulationProject extends ConsoleProgram {
         print("7- Quit\n>>");
     }
     public void binaryMantissa(){
-        System.out.println("TODO 1");
+        println("TODO 1\n");
     }
     private void decimalMantissa(){
-        System.out.println("TODO 2");
+        println("TODO 2\n");
     }
     private void naN(){
-        System.out.println("TODO 3");
+        println("TODO 3\n");
     }
     private void binaryOutput(){
-        System.out.println("TODO 4");
+        println("TODO 4\n");
     }
     private void hexadecimalEquivalent() {
-        System.out.println("TODO 5");
+        println("TODO 5\n");
     }
     private void outputTextFile(){
-        System.out.println("TODO 6");
+        println("TODO 6\n");
     }
     /* Solves NoClassDefFoundError */
     public static void main(String[] args) {
