@@ -1,6 +1,5 @@
 
 /**
- *
  * Authors:
  * Course:
  * Section:
