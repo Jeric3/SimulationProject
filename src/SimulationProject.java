@@ -7,6 +7,7 @@
  */
 import acm.program.*;
 import java.lang.Math.*;
+import java.math.MathContext;
 import java.util.Scanner;
 import java.math.BigDecimal;
 
@@ -17,6 +18,9 @@ public class SimulationProject extends ConsoleProgram {
     private BigDecimal mantissa;
     private int choice;
     private int exponent;
+    private int sign;
+    private long exponentRep;
+    private int fractionSig;
     Scanner scanner = new Scanner(System.in);
     public void run() {
         println("IEEE-754 Binary-64 Floating Point Converter");
@@ -57,6 +61,7 @@ public class SimulationProject extends ConsoleProgram {
         exponent = readInt();
         normalize();
         println("Mantissa: " + mantissa + " Exponent: " + exponent);
+        binaryOutput();
     }
     private void decimalMantissa(){
         println("Mantissa: ");
@@ -68,12 +73,23 @@ public class SimulationProject extends ConsoleProgram {
         mantissa = new BigDecimal(input);
         normalize();
         println("Mantissa: " + mantissa + " Exponent: " + exponent);
+        binaryOutput();
     }
     private void naN(){
         println("TODO 3\n");
     }
     private void binaryOutput(){
-        println("TODO 4\n");
+        if(mantissa.compareTo(new BigDecimal(0)) >= 0){
+            sign = 0;
+        } else {
+            sign = 1;
+        }
+
+        int newExponent = exponent + 1023;
+        exponentRep = Long.parseLong(Integer.toBinaryString(newExponent));
+
+        println("| " + sign + " | " + exponentRep + " | ");
+
     }
     private void hexadecimalEquivalent() {
         println("TODO 5\n");
@@ -107,23 +123,56 @@ public class SimulationProject extends ConsoleProgram {
         mantissa = new BigDecimal(input);
     }**/
     private void normalize(){
-        int firstDigit = Integer.parseInt(Double.toString(input).substring(0, 1));
-        if (firstDigit == 1){
-            while(Math.floor(input) != 1){
+        /**int firstDigit;
+        if (input >= 0){
+            firstDigit = Integer.parseInt(Double.toString(input).substring(0, 1));
+        } else {
+            firstDigit = Integer.parseInt(Double.toString(input).substring(0, 2));
+        }**/
+
+        BigDecimal firstdigit = mantissa.round(new MathContext(1));
+
+        println(firstdigit);
+
+        if(firstdigit.compareTo(new BigDecimal(1)) >= 0 || firstdigit.compareTo(new BigDecimal(-1)) <= 0){
+
+            while(Math.floor(input) != 1 && Math.ceil(input) != -1){
+                mantissa = mantissa.movePointLeft(1);
+                //mantissa = mantissa.divide(BigDecimal.TEN);
+                input = input / 10.0;
+                exponent++;
+                println(Math.floor(input));
+            }
+        } else {
+            while(Math.floor(input) != 1 && Math.ceil(input) != -1){
+                mantissa = mantissa.movePointRight(1);
+                //mantissa = mantissa.multiply(BigDecimal.TEN);
+                input = input * 10.0;
+                exponent--;
+                println(Math.floor(input));
+
+            }
+        }
+
+        /**if (firstDigit == 1){
+            while(Math.floor(input) != 1 && Math.ceil(input) != -1){
                 mantissa = mantissa.movePointLeft(1);
                 //mantissa = mantissa.divide(new BigDecimal(10));
                 input = input / 10.0;
                 exponent++;
+                println(Math.floor(input));
             }
 
         } else if (firstDigit == 0){
-            while(Math.floor(input) != 1){
+            while(Math.floor(input) != 1 && Math.ceil(input) != -1){
                 mantissa = mantissa.movePointRight(1);
                 //mantissa = mantissa.multiply(new BigDecimal(10));
                 input = input * 10.0;
                 exponent--;
+                println(Math.floor(input));
+
             }
-        }
+        }**/
     }
     /* Solves NoClassDefFoundError */
     public static void main(String[] args) {
