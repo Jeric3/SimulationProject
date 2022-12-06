@@ -16,6 +16,7 @@ public class SimulationProject extends ConsoleProgram {
     private int continueValue = 0;
     private double input;
     private BigDecimal mantissa;
+    private int numDigitsMantissa;
     private int choice;
     private int exponent;
     private int sign;
@@ -56,7 +57,8 @@ public class SimulationProject extends ConsoleProgram {
     public void binaryMantissa(){
         println("Mantissa: ");
         input = readDouble();
-        mantissa = new BigDecimal(input);
+        mantissa = BigDecimal.valueOf(input);
+        numDigitsMantissa = mantissa.precision();
         println("Exponent of base-2: ");
         exponent = readInt();
         normalize();
@@ -70,7 +72,7 @@ public class SimulationProject extends ConsoleProgram {
         exponent = readInt();
         String str = convertToBinary(input);
         input = Double.valueOf(str);
-        mantissa = new BigDecimal(input);
+        mantissa = BigDecimal.valueOf(input);
         normalize();
         println("Mantissa: " + mantissa + " Exponent: " + exponent);
         binaryOutput();
@@ -88,8 +90,9 @@ public class SimulationProject extends ConsoleProgram {
         int newExponent = exponent + 1023;
         exponentRep = Long.parseLong(Integer.toBinaryString(newExponent));
 
-        println("| " + sign + " | " + exponentRep + " | ");
+        BigDecimal fractionalPart = mantissa.remainder(BigDecimal.ONE);
 
+        println("| " + sign + " | " + exponentRep + " | " + fractionalPart + " | ");
     }
     private void hexadecimalEquivalent() {
         println("TODO 5\n");
@@ -137,21 +140,23 @@ public class SimulationProject extends ConsoleProgram {
         if(firstdigit.compareTo(new BigDecimal(1)) >= 0 || firstdigit.compareTo(new BigDecimal(-1)) <= 0){
 
             while(Math.floor(input) != 1 && Math.ceil(input) != -1){
-                mantissa = mantissa.movePointLeft(1);
-                //mantissa = mantissa.divide(BigDecimal.TEN);
+                //mantissa = mantissa.movePointLeft(1);
+                mantissa = mantissa.divide(new BigDecimal("10.0"));
                 input = input / 10.0;
                 exponent++;
                 println(Math.floor(input));
             }
+            //mantissa = mantissa.round(new MathContext(numDigitsMantissa));
         } else {
             while(Math.floor(input) != 1 && Math.ceil(input) != -1){
-                mantissa = mantissa.movePointRight(1);
-                //mantissa = mantissa.multiply(BigDecimal.TEN);
+                //mantissa = mantissa.movePointRight(1);
+                mantissa = mantissa.multiply(new BigDecimal("10.0"));
                 input = input * 10.0;
                 exponent--;
                 println(Math.floor(input));
 
             }
+            //mantissa = mantissa.round(new MathContext(numDigitsMantissa));
         }
 
         /**if (firstDigit == 1){
