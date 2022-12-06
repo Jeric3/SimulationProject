@@ -10,7 +10,7 @@ import java.lang.Math.*;
 import java.math.MathContext;
 import java.util.Scanner;
 import java.math.BigDecimal;
-
+import java.text.DecimalFormat;
 
 public class SimulationProject extends ConsoleProgram {
     private int continueValue = 0;
@@ -22,6 +22,8 @@ public class SimulationProject extends ConsoleProgram {
     private int sign;
     private long exponentRep;
     private int fractionSig;
+
+    DecimalFormat decFormat = new DecimalFormat("000000000000");
     Scanner scanner = new Scanner(System.in);
     public void run() {
         println("IEEE-754 Binary-64 Floating Point Converter");
@@ -90,9 +92,17 @@ public class SimulationProject extends ConsoleProgram {
         int newExponent = exponent + 1023;
         exponentRep = Long.parseLong(Integer.toBinaryString(newExponent));
 
-        BigDecimal fractionalPart = mantissa.remainder(BigDecimal.ONE);
+        String[] split = mantissa.toString().split("\\.");
+        int i = split[1].length();   // counts the digit after decimal point
+        BigDecimal fractionalPart = mantissa.remainder(BigDecimal.ONE).movePointRight(i);
+        //BigDecimal fractionalPart = mantissa.remainder(BigDecimal.ONE);
 
-        println("| " + sign + " | " + exponentRep + " | " + fractionalPart + " | ");
+        int d = fractionalPart.intValue();
+        String str = String.format("%052d", d); //padding 0 for fractionalPart
+
+        println("| " + sign + " | " + exponentRep + " | " + str + " | ");
+        //println("| " + sign + " | " + exponentRep + " | " + fractionalPart + " | ");
+        //println( "" + sign  + exponentRep + fractionalPart);
     }
     private void hexadecimalEquivalent() {
         println("TODO 5\n");
@@ -154,7 +164,6 @@ public class SimulationProject extends ConsoleProgram {
                 input = input * 10.0;
                 exponent--;
                 println(Math.floor(input));
-
             }
             //mantissa = mantissa.round(new MathContext(numDigitsMantissa));
         }
