@@ -97,8 +97,10 @@ public class SimulationProject extends ConsoleProgram {
         BigDecimal fractionalPart = mantissa.remainder(BigDecimal.ONE).movePointRight(i);
         //BigDecimal fractionalPart = mantissa.remainder(BigDecimal.ONE);
 
+        //int d = fractionalPart.intValue();
         int d = fractionalPart.intValue();
-        String str = String.format("%052d", d); //padding 0 for fractionalPart
+        String str = String.format("%" + i + "d", d);
+        str = String.format("%1$-" + 52 + "s", str).replace(' ', '0'); //padding 0 for fractionalPart
 
         println("| " + sign + " | " + exponentRep + " | " + str + " | ");
         //println("| " + sign + " | " + exponentRep + " | " + fractionalPart + " | ");
