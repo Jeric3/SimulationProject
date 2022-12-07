@@ -1,9 +1,11 @@
 
 /**
- *
- * Authors:
- * Course:
- * Section:
+ * Group: Group 2
+ * Authors: CAMPOL, RUSSEL JOSHUA MANGAMPO
+ *          MEDIALDEA, RAYMUND LUIS CARDENAS
+ *          MULDONG, JERICHO LUIS SICANGCO
+ * Course: CSARCH2
+ * Section: S12
  */
 import acm.program.*;
 
@@ -49,12 +51,61 @@ public class SimulationProject extends ConsoleProgram {
                     decimalMantissa();
                     break;
                 case 3:
-                    naN();
+                    output = "0" + "00000000000" + "0000000000000000000000000000000000000000000000000000";
+                    txtOutput = "| " + "0" + " | " + "00000000000" + " | " + "0000000000000000000000000000000000000000000000000000" + " | ";
+                    println(txtOutput);
+                    hexadecimalEquivalent(output);
                     break;
                 case 4:
-                    outputTextFile();
+                    output = "1" + "00000000000" + "0000000000000000000000000000000000000000000000000000";
+                    txtOutput = "| " + "1" + " | " + "00000000000" + " | " + "0000000000000000000000000000000000000000000000000000" + " | ";
+                    println(txtOutput);
+                    hexadecimalEquivalent(output);
                     break;
                 case 5:
+                    output = "0" + "00000000000" + "1010101010101010101010101010101010101010101010101010";
+                    txtOutput = "| " + "0" + " | " + "00000000000" + " | " + "1010101010101010101010101010101010101010101010101010" + " | ";
+                    println(txtOutput);
+                    hexadecimalEquivalent(output);
+                    break;
+                case 6:
+                    output = "1" + "00000000000" + "1010101010101010101010101010101010101010101010101010";
+                    txtOutput = "| " + "1" + " | " + "00000000000" + " | " + "1010101010101010101010101010101010101010101010101010" + " | ";
+                    println(txtOutput);
+                    hexadecimalEquivalent(output);
+                    break;
+                case 7:
+                    output = "0" + "11111111111" + "0000000000000000000000000000000000000000000000000000";
+                    txtOutput = "| " + "0" + " | " + "11111111111" + " | " + "0000000000000000000000000000000000000000000000000000" + " | ";
+                    println(txtOutput);
+                    hexadecimalEquivalent(output);
+                    break;
+                case 8:
+                    output = "1" + "11111111111" + "0000000000000000000000000000000000000000000000000000";
+                    txtOutput = "| " + "1" + " | " + "11111111111" + " | " + "0000000000000000000000000000000000000000000000000000" + " | ";
+                    println(txtOutput);
+                    hexadecimalEquivalent(output);
+                    break;
+                case 9:
+                    output = "0" + "11111111111" + "0100000000000000000000000000000000000000000000000000";
+                    txtOutput = "| " + "0" + " | " + "11111111111" + " | " + "0100000000000000000000000000000000000000000000000000" + " | ";
+                    println(txtOutput);
+                    hexadecimalEquivalent(output);
+                    break;
+                case 10:
+                    output = "0" + "11111111111" + "1000000000000000000000000000000000000000000000000000";
+                    txtOutput = "| " + "0" + " | " + "11111111111" + " | " + "1000000000000000000000000000000000000000000000000000" + " | ";
+                    println(txtOutput);
+                    hexadecimalEquivalent(output);
+                    break;
+                case 11:
+                    outputTextFile();
+                    break;
+                case 12:
+                    txtOutput = "";
+                    txtHexOutputFinal = "";
+                    break;
+                case 13:
                     continueValue = 1;
                     break;
                 default:
@@ -67,9 +118,17 @@ public class SimulationProject extends ConsoleProgram {
         println("\nChoose Operation");
         println("1- Input binary mantissa and base-2 (i.e., 101.01x2^5)");
         println("2- Input decimal mantissa and base-10 (i.e., 15.75x10^5)");
-        println("3- Input NaN");
-        println("4- Write recent output to a text file");
-        print("5- Quit\n>>");
+        println("3- Input +0 (Positive Zero)");
+        println("4- Input -0 (Negative Zero)");
+        println("5- Input +denormalized");
+        println("6- Input -denormalized");
+        println("7- Input +infinity");
+        println("8- Input -infinity");
+        println("9- Input sNaN");
+        println("10- Input qNaN");
+        println("11- Write recent output to a text file");
+        println("12- Clear output");
+        print("13- Quit\n>>");
     }
     public void binaryMantissa(){
         println("Mantissa: ");
