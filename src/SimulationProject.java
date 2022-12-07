@@ -173,23 +173,17 @@ public class SimulationProject extends ConsoleProgram {
 
         String[] split = mantissa.toString().split("\\.");
         int i = split[1].length();   // counts the digit after decimal point
-        BigDecimal fractionalPart = mantissa.remainder(BigDecimal.ONE).movePointRight(i+(52-i));
+        BigDecimal fractionalPart = mantissa.remainder(BigDecimal.ONE).movePointRight(i);
         //BigDecimal fractionalPart = mantissa.remainder(BigDecimal.ONE);
 
-//        int d = fractionalPart.intValue();
-        String str = String.valueOf(fractionalPart);
-        String str2 = str;
-//        println(String.valueOf(mantissa).charAt(2));
-        if(String.valueOf(mantissa).charAt(2) == '0' || (String.valueOf(mantissa).charAt(0) == '-' && String.valueOf(mantissa).charAt(3) == '0')){
-            str2 = "0" + str;
-        }
-        String str3 = str2.replace("-", "");
-//        String str = String.format("%052d", d); //padding 0 for fractionalPart
-//        String str = String.format("%d", d); //padding 0 for fractionalPart
+        //int d = fractionalPart.intValue();
+        int d = fractionalPart.intValue();
+        String str = String.format("%" + i + "d", d);
+        str = String.format("%1$-" + 52 + "s", str).replace(' ', '0'); //padding 0 for fractionalPart
 
-        output = String.valueOf(sign) + formattedStringExponentRep + str3;
-        txtOutput = "| " + sign + " | " + formattedStringExponentRep + " | " + str3 + " | ";
-        println("| " + sign + " | " + formattedStringExponentRep + " | " + str3 + " | ");
+        output = String.valueOf(sign) + formattedStringExponentRep + str;
+        txtOutput = "| " + sign + " | " + formattedStringExponentRep + " | " + str + " | ";
+        println("| " + sign + " | " + formattedStringExponentRep + " | " + str + " | ");
         //println("| " + sign + " | " + exponentRep + " | " + fractionalPart + " | ");
         //println( "" + sign  + exponentRep + fractionalPart);
         hexadecimalEquivalent(output);
