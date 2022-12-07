@@ -138,7 +138,7 @@ public class SimulationProject extends ConsoleProgram {
         println("Exponent of base-2: ");
         exponent = readInt();
         normalize();
-        println("Mantissa: " + mantissa + " Exponent: " + exponent);
+        //println("Mantissa: " + mantissa + " Exponent: " + exponent);
         binaryOutput();
     }
     private void decimalMantissa(){
@@ -150,7 +150,7 @@ public class SimulationProject extends ConsoleProgram {
         input = Double.valueOf(str);
         mantissa = BigDecimal.valueOf(input);
         normalize();
-        println("Mantissa: " + mantissa + " Exponent: " + exponent);
+        //println("Mantissa: " + mantissa + " Exponent: " + exponent);
         binaryOutput();
     }
     private void naN(){
@@ -296,7 +296,7 @@ public class SimulationProject extends ConsoleProgram {
 
         BigDecimal firstdigit = mantissa.round(new MathContext(1));
 
-        println(firstdigit);
+        //println(firstdigit);
 
         if(firstdigit.compareTo(new BigDecimal(1)) >= 0 || firstdigit.compareTo(new BigDecimal(-1)) <= 0){
 
@@ -305,7 +305,7 @@ public class SimulationProject extends ConsoleProgram {
                 mantissa = mantissa.divide(new BigDecimal("10.0"));
                 input = input / 10.0;
                 exponent++;
-                println(Math.floor(input));
+                //println(Math.floor(input));
             }
             //mantissa = mantissa.round(new MathContext(numDigitsMantissa));
         } else {
@@ -314,7 +314,7 @@ public class SimulationProject extends ConsoleProgram {
                 mantissa = mantissa.multiply(new BigDecimal("10.0"));
                 input = input * 10.0;
                 exponent--;
-                println(Math.floor(input));
+                //println(Math.floor(input));
             }
             //mantissa = mantissa.round(new MathContext(numDigitsMantissa));
         }
