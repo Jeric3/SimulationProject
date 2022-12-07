@@ -165,6 +165,11 @@ public class SimulationProject extends ConsoleProgram {
 
         int newExponent = exponent + 1023;
         exponentRep = Long.parseLong(Integer.toBinaryString(newExponent));
+        int lengthExponentRep = String.valueOf(exponentRep).length();
+        int paddingSize = 8 - lengthExponentRep;
+        String stringExponentRep = String.valueOf(exponentRep);
+        String formattedStringExponentRep = String.format("%011d", exponentRep);
+        println(formattedStringExponentRep);
 
         String[] split = mantissa.toString().split("\\.");
         int i = split[1].length();   // counts the digit after decimal point
@@ -182,9 +187,9 @@ public class SimulationProject extends ConsoleProgram {
 //        String str = String.format("%052d", d); //padding 0 for fractionalPart
 //        String str = String.format("%d", d); //padding 0 for fractionalPart
 
-        output = String.valueOf(sign) + String.valueOf(exponentRep) + str3;
-        txtOutput = "| " + sign + " | " + exponentRep + " | " + str3 + " | ";
-        println("| " + sign + " | " + exponentRep + " | " + str3 + " | ");
+        output = String.valueOf(sign) + formattedStringExponentRep + str3;
+        txtOutput = "| " + sign + " | " + formattedStringExponentRep + " | " + str3 + " | ";
+        println("| " + sign + " | " + formattedStringExponentRep + " | " + str3 + " | ");
         //println("| " + sign + " | " + exponentRep + " | " + fractionalPart + " | ");
         //println( "" + sign  + exponentRep + fractionalPart);
         hexadecimalEquivalent(output);
