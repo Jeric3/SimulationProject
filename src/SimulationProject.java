@@ -6,8 +6,14 @@
  * Section:
  */
 import acm.program.*;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.Math.*;
+import java.math.BigInteger;
 import java.math.MathContext;
+import java.util.Objects;
 import java.util.Scanner;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -22,6 +28,11 @@ public class SimulationProject extends ConsoleProgram {
     private int sign;
     private long exponentRep;
     private int fractionSig;
+    private String output = "";
+    private String txtOutput = "";
+    private String txtHexOutput = "";
+    private String txtHexOutputFinal = "";
+    private String printYesNo = "";
 
     DecimalFormat decFormat = new DecimalFormat("000000000000");
     Scanner scanner = new Scanner(System.in);
@@ -41,6 +52,9 @@ public class SimulationProject extends ConsoleProgram {
                     naN();
                     break;
                 case 4:
+                    outputTextFile();
+                    break;
+                case 5:
                     continueValue = 1;
                     break;
                 default:
@@ -50,11 +64,12 @@ public class SimulationProject extends ConsoleProgram {
         System.exit(0);
     }
     private void operations() {
-        println("Choose Operation");
+        println("\nChoose Operation");
         println("1- Input binary mantissa and base-2 (i.e., 101.01x2^5)");
         println("2- Input decimal mantissa and base-10 (i.e., 15.75x10^5)");
         println("3- Input NaN");
-        print("4- Quit\n>>");
+        println("4- Write recent output to a text file");
+        print("5- Quit\n>>");
     }
     public void binaryMantissa(){
         println("Mantissa: ");
@@ -94,21 +109,98 @@ public class SimulationProject extends ConsoleProgram {
 
         String[] split = mantissa.toString().split("\\.");
         int i = split[1].length();   // counts the digit after decimal point
-        BigDecimal fractionalPart = mantissa.remainder(BigDecimal.ONE).movePointRight(i);
+        BigDecimal fractionalPart = mantissa.remainder(BigDecimal.ONE).movePointRight(i+(52-i));
         //BigDecimal fractionalPart = mantissa.remainder(BigDecimal.ONE);
 
-        int d = fractionalPart.intValue();
-        String str = String.format("%052d", d); //padding 0 for fractionalPart
+//        int d = fractionalPart.intValue();
+        String str = String.valueOf(fractionalPart);
+        String str2 = str;
+//        println(String.valueOf(mantissa).charAt(2));
+        if(String.valueOf(mantissa).charAt(2) == '0' || (String.valueOf(mantissa).charAt(0) == '-' && String.valueOf(mantissa).charAt(3) == '0')){
+            str2 = "0" + str;
+        }
+        String str3 = str2.replace("-", "");
+//        String str = String.format("%052d", d); //padding 0 for fractionalPart
+//        String str = String.format("%d", d); //padding 0 for fractionalPart
 
-        println("| " + sign + " | " + exponentRep + " | " + str + " | ");
+        output = String.valueOf(sign) + String.valueOf(exponentRep) + str3;
+        txtOutput = "| " + sign + " | " + exponentRep + " | " + str3 + " | ";
+        println("| " + sign + " | " + exponentRep + " | " + str3 + " | ");
         //println("| " + sign + " | " + exponentRep + " | " + fractionalPart + " | ");
         //println( "" + sign  + exponentRep + fractionalPart);
+        hexadecimalEquivalent(output);
+//        println("Write output in a text file? [Y/N]");
+//        printYesNo = scanner.nextLine();
+//        if(Objects.equals(printYesNo, "Y") || Objects.equals(printYesNo, "y"))
+//            outputTextFile();
     }
-    private void hexadecimalEquivalent() {
-        println("TODO 5\n");
+    private void hexadecimalEquivalent(String binaryString) {
+        int digitNumber = 1;
+        int sum = 0;
+        String binary = binaryString;
+        for(int i = 0; i < binary.length(); i++){
+            if(digitNumber == 1)
+                sum+=Integer.parseInt(binary.charAt(i) + "")*8;
+            else if(digitNumber == 2)
+                sum+=Integer.parseInt(binary.charAt(i) + "")*4;
+            else if(digitNumber == 3)
+                sum+=Integer.parseInt(binary.charAt(i) + "")*2;
+            else if(digitNumber == 4 || i < binary.length()+1){
+                sum+=Integer.parseInt(binary.charAt(i) + "")*1;
+                digitNumber = 0;
+                if(sum < 10){
+                    txtHexOutput = String.valueOf(sum);
+                    txtHexOutputFinal = txtHexOutputFinal.concat(txtHexOutput);
+//                    print(sum);
+                }
+                else if(sum == 10)
+                    txtHexOutputFinal = txtHexOutputFinal.concat("A");
+//                    print("A");
+                else if(sum == 11)
+                    txtHexOutputFinal = txtHexOutputFinal.concat("B");
+//                    print("B");
+                else if(sum == 12)
+                    txtHexOutputFinal = txtHexOutputFinal.concat("C");
+//                    print("C");
+                else if(sum == 13)
+                    txtHexOutputFinal = txtHexOutputFinal.concat("D");
+//                    print("D");
+                else if(sum == 14)
+                    txtHexOutputFinal = txtHexOutputFinal.concat("E");
+//                    print("E");
+                else if(sum == 15)
+                    txtHexOutputFinal = txtHexOutputFinal.concat("F");
+//                    print("F");
+                sum=0;
+            }
+            digitNumber++;
+        }
+        println(txtHexOutputFinal);
     }
     private void outputTextFile(){
-        println("TODO 6\n");
+        try {
+            File fileObj = new File(System.getProperty("user.dir")+"\\output.txt");
+            if (fileObj.createNewFile()) {
+                System.out.println("File created: " + fileObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+        try {
+            FileWriter fileWriter = new FileWriter(System.getProperty("user.dir")+"\\output.txt");
+            fileWriter.write(txtOutput);
+            fileWriter.write("\r\n");
+            fileWriter.write(txtHexOutputFinal);
+            fileWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 
     public String convertToBinary(Double d){
